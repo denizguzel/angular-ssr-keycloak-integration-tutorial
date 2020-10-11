@@ -34,7 +34,3 @@ $ yarn serve:ssr
 ```
 
 Server listening on http://localhost:4000
-
-NOT: Please add "\*" to WebOrigins for "Angular-keycloak-test" client.
-
-![image info](./web-origins.png)
