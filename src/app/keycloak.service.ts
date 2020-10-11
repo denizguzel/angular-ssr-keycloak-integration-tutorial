@@ -1,38 +1,35 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import KeycloakInstance from 'keycloak-js';
 
-declare var require: any;
+const Keycloak: typeof KeycloakInstance = typeof window !== 'undefined' ? require('keycloak-js') : null;
 
-const Keycloak = typeof window !== 'undefined' ? require('keycloak-js') : null;
+export const KEYCLOAK_CONFIG = new InjectionToken<Keycloak.KeycloakConfig>('keycloak-config');
 
 @Injectable({
   providedIn: 'root',
 })
 export class KeycloakService {
-  public keycloakAuth: any;
+  private instance: Keycloak.KeycloakInstance;
 
-  constructor() {}
+  constructor(@Inject(KEYCLOAK_CONFIG) private keycloakConfig: Keycloak.KeycloakConfig) {}
 
-  init() {
+  init(): Promise<void> {
     if (Keycloak === null) return null;
+
     return new Promise((resolve, reject) => {
-      const config = {
-        url: 'http://localhost:8080/auth',
-        realm: 'frontend',
-        clientId: 'angular-keycloak-test',
-      };
-      this.keycloakAuth = new Keycloak(config);
-      this.keycloakAuth
+      this.instance = Keycloak(this.keycloakConfig);
+      this.instance
         .init({
           checkLoginIframe: false,
           onLoad: 'login-required',
           silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         })
-        .success(() => {
+        .then(() => {
           console.log('success');
 
           resolve();
         })
-        .error(() => {
+        .catch(() => {
           console.log('error');
 
           reject();
@@ -41,10 +38,10 @@ export class KeycloakService {
   }
 
   getToken(): string {
-    return this.keycloakAuth.token;
+    return this.instance.token;
   }
 
   getRefreshToken(): string {
-    return this.keycloakAuth.refreshToken;
+    return this.instance.refreshToken;
   }
 }

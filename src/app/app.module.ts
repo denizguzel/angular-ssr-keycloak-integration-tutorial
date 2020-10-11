@@ -1,10 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { KeycloakService } from './keycloak.service';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { environment } from '../environments/environment';
 import { ApiInterceptor } from './api-interceptor';
+import { AppComponent } from './app.component';
+import { KeycloakService, KEYCLOAK_CONFIG } from './keycloak.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +21,10 @@ import { ApiInterceptor } from './api-interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
       multi: true,
+    },
+    {
+      provide: KEYCLOAK_CONFIG,
+      useValue: environment.keycloak,
     },
   ],
   bootstrap: [AppComponent],

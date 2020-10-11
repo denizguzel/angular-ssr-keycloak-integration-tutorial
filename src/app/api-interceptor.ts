@@ -5,11 +5,9 @@ import { KeycloakService } from './keycloak.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  constructor(@Optional() @Inject('keycloak-token') public token: string, private keycloakService: KeycloakService) {}
+  constructor(@Optional() @Inject('keycloak-token') private token: string, private keycloakService: KeycloakService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(this.token);
-
     const token = this.token || this.keycloakService.getToken();
 
     const setHeaders = {};
