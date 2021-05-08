@@ -11,7 +11,8 @@
     "dev:ssr": "ng run keycloak:serve-ssr",
     "serve:ssr": "node dist/keycloak/server/main.js",
     "build:ssr": "ng build --prod && ng run keycloak:server:production",
-    "prerender": "ng run keycloak:prerender"
+    "prerender": "ng run keycloak:prerender",
+    "format": "prettier --write \"./**/*.{ts,html,css,json}\""
   },
   "private": true,
   "resolutions": {
@@ -55,7 +56,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
