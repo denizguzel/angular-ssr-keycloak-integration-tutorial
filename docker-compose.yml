@@ -2,7 +2,7 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:10.0.1
+    image: quay.io/keycloak/keycloak
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin

@@ -24,16 +24,8 @@ export class KeycloakService {
           onLoad: 'login-required',
           silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
         })
-        .then(() => {
-          console.log('success');
-
-          resolve();
-        })
-        .catch(() => {
-          console.log('error');
-
-          reject();
-        });
+        .then(() => resolve())
+        .catch(() => reject());
     });
   }
 
